@@ -12,8 +12,7 @@ int **matrix;
 char **unique;
 int unique_count;
 
-char *
-process_input(FILE *file)
+char *process_input(FILE *file)
 {
     char *processed = NULL;
     int size = INITIAL_BUFFER_SIZE;
@@ -633,7 +632,6 @@ void randomWalk()
 
 int main()
 {
-
     FILE *file = fopen("Cursed Be The Treasure.txt", "r"); // Easy Test        Cursed Be The Treasure
     if (!file)
     {
