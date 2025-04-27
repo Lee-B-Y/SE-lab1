@@ -574,12 +574,10 @@ void calPageRank(const char *input)
 
 void randomWalk()
 {
-    srand(time(NULL)); // 为随机数生成器提供种子
+    srand(time(NULL));
 
-    // 从图中的一个随机节点开始
     int current_node = rand() % unique_count;
-    printf("Random walk starting from: %s\n", unique[current_node]);
-
+    
     FILE *file = fopen("random_walk_output.txt", "w");
     if (!file)
     {
@@ -587,42 +585,40 @@ void randomWalk()
         return;
     }
 
-    fprintf(file, "%s", unique[current_node]); // 写入第一个节点
+    printf("%s", unique[current_node]); // Print first node
+    fprintf(file, "%s", unique[current_node]);
 
     int visited[unique_count];
-    memset(visited, 0, sizeof(visited)); // 标记访问过的节点
+    memset(visited, 0, sizeof(visited));
 
     while (1)
     {
-        visited[current_node] = 1; // 标记当前节点已访问
+        visited[current_node] = 1;
 
-        // 找到当前节点的所有出边
         int next_node = -1;
         int num_out_edges = 0;
         for (int i = 0; i < unique_count; i++)
         {
-            if (matrix[current_node][i] > 0) // 存在边 current_node -> i
+            if (matrix[current_node][i] > 0)
             {
                 num_out_edges++;
-                if (rand() % num_out_edges == 0) // 随机选择一个出边
+                if (rand() % num_out_edges == 0)
                     next_node = i;
             }
         }
 
-        if (next_node == -1 || visited[next_node]) // 如果没有出边或到达已访问节点
+        if (next_node == -1 || visited[next_node])
             break;
 
-        // 记录节点并写入文件
+        printf(" %s", unique[next_node]); // Print next node with space
         fprintf(file, " %s", unique[next_node]);
-        printf("Walking to: %s\n", unique[next_node]);
 
         current_node = next_node;
 
-        // 检测按键输入，按下任意键停止
         if (kbhit())
         {
-            char ch = getch(); // 获取按下的键
-            if (ch != 0)       // 退出时按下任意键
+            char ch = getch();
+            if (ch != 0)
             {
                 printf("\nRandom walk stopped by user input.\n");
                 break;
@@ -630,9 +626,9 @@ void randomWalk()
         }
     }
 
-    fclose(file); // 关闭文件
-
-    printf("Random walk finished. The nodes visited are written to 'random_walk_output.txt'.\n");
+    printf("\n"); // Add newline at the end
+    fclose(file);
+    printf("\nRandom walk finished. Results saved to 'random_walk_output.txt'.\n");
 }
 
 int main()
@@ -688,8 +684,6 @@ int main()
         }
     }
 
-    showDirectedGraph();
-
     while(1)
     {
         char input[100];
@@ -740,7 +734,21 @@ int main()
             printf("\n");
             randomWalk();
             break;
+        case 7:
+            for (int i = 0; i < unique_count; i++)
+                free(matrix[i]);
+            free(matrix);
+            for (int i = 0; i < unique_count; i++)
+                free(unique[i]);
+            free(unique);
+            for (int i = 0; i < word_count; i++)
+                free(words[i]);
+            free(words);
+            return 0;
         }
+        printf("input enter to continue...\n");
+        getchar(); // 清除换行符
+        getchar(); // 等待用户输入
     }
 
     for (int i = 0; i < unique_count; i++)
