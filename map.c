@@ -633,7 +633,6 @@ void randomWalk()
 
 int main()
 {
-
     FILE *file = fopen("Cursed Be The Treasure.txt", "r"); // Easy Test        Cursed Be The Treasure
     if (!file)
     {
