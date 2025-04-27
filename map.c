@@ -12,8 +12,7 @@ int **matrix;
 char **unique;
 int unique_count;
 
-char *
-process_input(FILE *file)
+char *process_input(FILE *file)
 {
     char *processed = NULL;
     int size = INITIAL_BUFFER_SIZE;
